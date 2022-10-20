@@ -1,0 +1,133 @@
+package gokul;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Properties;
+import java.util.Scanner;
+
+public class calendar {
+	static Properties p = new Properties();
+	static	int month;
+	
+	public static void main(String[] args) throws FileNotFoundException, IOException {
+		//FileInputStream fs= new FileInputStream()
+		p.load(new FileInputStream(
+				"C:\\Users\\User-14\\eclipse-workspace\\VendingMachine\\src\\gokul\\cal.propereties"));
+		System.out.println("WELCOME have a nice day");
+		Scanner sc = new Scanner(System.in);//
+		System.out.println("Enter year:");
+		int year = sc.nextInt();
+		System.out.println("Enter month:");
+		int month = sc.nextInt();
+		
+			if(month<=12)
+			{
+
+		// System.out.println("Enter NUMBER:");
+		// int dey=sc.nextInt();
+
+//		ArrayList<Integer> a = new ArrayList<Integer>();
+//		a.add(1);
+//		a.add(2);
+//		a.add(3);
+//		a.add(4);
+//		a.add(5);
+//		a.add(6);
+//		a.add(7);
+//		a.add(8);
+//		a.add(9);
+//		a.add(10);
+//		a.add(11);
+//		a.add(12);
+
+//		ArrayList<String> months = new ArrayList<String>();
+//		months.add("");
+//		months.add("JANUARY");
+//		months.add("FEBRUARY");
+//		months.add("MARCH");
+//		months.add("APRIL");
+//		months.add("MAY");
+//		months.add("JUNE");
+//		months.add("JULY");
+//		months.add("AUGUST");
+//		months.add("SEPTEMBER");
+//		months.add("OCTOBER");
+//		months.add("NOVEMBER");
+//		months.add("DECEMBER");
+
+//		ArrayList<Integer> days = new ArrayList<Integer>();
+//		days.add(31);
+//		days.add(29);
+//		days.add(31);
+//		days.add(30);
+//		days.add(31);
+//		days.add(30);
+//		days.add(31);
+//		days.add(31);
+//		days.add(30);2
+//		days.add(31);
+//		days.add(30);
+//		days.add(31);
+
+		try {
+		
+		
+		if (month == 2 && isLeapYear(year))
+			p.setProperty("feb", "29");
+
+		System.out.println("   " + p.getProperty(String.valueOf(month)) + " " + year);
+		System.out.println(" S  M Tu  W Th  F  Sa");
+
+		int d1 = day(month, 1, year);
+
+		for (int i = 0; i < d1; i++)
+			System.out.print("   ");
+		for (int j = 1; j <= Integer.parseInt(p.getProperty(String.valueOf(p.getProperty(String.valueOf(month))))); j++) {
+			// System.out.printf("j=",j);
+			System.out.printf("%2d ", j);
+			if (((j + d1) % 7 == 0) || (j == Integer.parseInt(p.getProperty(String.valueOf(p.getProperty(String.valueOf(month)))))))
+				System.out.println();
+
+		}
+		if (year == 2022 && month == 10)
+			System.out.println("remainder =18th today is rams birthday");
+		else
+			System.out.println("no remainder");
+
+		System.out.println("");
+
+		LocalDate date = LocalDate.now();
+		System.out.println("Current Date: " + date);
+		}
+		catch (Exception e) {
+			System.out.println("invalid month");
+		}
+	}
+			else
+			{
+				System.out.println("Invalid month");
+			}
+	}
+
+	public static int day(int month, int day, int year) {
+		int ye = year - (14 - month) / 12;
+		int xe = ye + ye / 4 - ye / 100 + ye / 400;
+
+		int mo = month + 12 * ((14 - month) / 12) - 2;
+
+		return (day + xe + (31 * mo) / 12) % 7;
+	}
+
+	public static boolean isLeapYear(int year) {
+		if ((year % 4 == 0) && (year % 100 != 0))
+			return true;
+		if (year % 400 == 0)
+			return true;
+		return false;
+
+	}
+}
+	
