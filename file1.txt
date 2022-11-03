@@ -1,0 +1,2 @@
+spring.userName =gok
+spring.password = 123

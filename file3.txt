@@ -1,0 +1,33 @@
+package com.calculation.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.calculation.demo.service.Serviceclass;
+
+@RestController
+public class UserLogin {
+	
+	@Autowired
+	Serviceclass serviceClass;
+	
+	
+	@RequestMapping(value="/userLogin", method =RequestMethod.POST, produces="application/json")
+	public String userLogin(@RequestParam String userName, @RequestParam String password){
+		String result ="";
+		try {
+			result = serviceClass.userLogin(userName, password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+
+}
