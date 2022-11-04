@@ -1,0 +1,211 @@
+CREATE TABLE Hari_Gokul
+(
+ID INT PRIMARY KEY,
+FIRST_NAME VARCHAR(40),
+LAST_NAME VARCHAR(40),
+SALARY DECIMAL(8,2), 
+DEPARTMENT_ID INT,
+YEAR_OF_JOINING DATETIME,
+YEAR_OF_RELIEVING DATETIME
+)
+CREATE TABLE DEPART
+(
+DEPARTMENT_ID INT PRIMARY KEY,
+MANAGER_ID INT,
+DEPARTMENT_NAME VARCHAR(50)
+)
+insert into Hari_Gokul values (1,'sarojini','Hari',10000.00,101,'2015-01-15 10:02:44','2018-02-20 11:59:00')
+insert into Hari_Gokul values (2,'Gokul','krish',6000.00,10,'2010-01-15 11:02:44','2020-02-20 10:59:00')
+insert into Hari_Gokul values (3,'siva','kumar',7000.00,101,'2008-05-17 04:03:50','2018-01-30 01:05:08')
+insert into Hari_Gokul values (4,'santhosh','narayan',20000.00,90,'2000-01-19 07:48:59','2005-07-20 03:12:45')
+insert into Hari_Gokul values (5,'sarojini','Hari',15000.00,90,'2015-07-21 07:11:12','2018-04-27 01:39:07')
+insert into Hari_Gokul values (6,'kavya','sre',1000.00,null,'2015-09-11 02:05:34','2018-06-20 02:55:15')
+insert into Hari_Gokul values (7,'jenifer','eswar',1500.00,20,'2015-04-20 10:02:43','2018-02-20 23:59:00')
+insert into Hari_Gokul values (8,'sre','suzeen',2000.00,30,'2015-05-19 11:02:44','2019-03-08 19:28:23')
+insert into Hari_Gokul values (9,'abi','shek',10000.00,50,'2015-06-18 12:03:44','2018-05-20 16:40:00')
+insert into Hari_Gokul values (10,'hari','prasath',7000.00,null,'2015-07-17 07:02:44','2021-11-10 17:38:00')
+insert into Hari_Gokul values (11,'sowmi','mia',1200.00,90,'2015-08-16 03:01:44','2020-12-09 23:42:00')
+insert into Hari_Gokul values (12,'ashwin','kumar',12000.00,82,'2015-09-11 04:01:44','2022-12-09 01:42:00')
+insert into Hari_Gokul values (13,'snega','sre',11000.00,100,'2015-08-11 04:02:44','2022-02-09 01:32:00')
+insert into Hari_Gokul values (14,'gopi','krish',10000.00,90,'2002-01-20 07:48:59','2004-07-20 03:10:45')
+insert into Hari_Gokul values (15,'siva','gobal',18000.00,90,'2005-01-17 03:48:59','2008-06-22 04:12:55')
+
+
+insert into DEPART values(50,1001,'developer')
+insert into DEPART values(10,1002,'WebDesign')
+insert into DEPART values(20,1003,'UI/Ux')
+insert into DEPART values(90,1004,'Buisness Analyst')
+insert into DEPART values(30,1005,'Testing')
+insert into DEPART values(100,NULL,'ANALYST')
+
+
+--1
+SELECT FIRST_NAME
+FROM HARI_GOKUL_EMPLOYEE 
+WHERE FIRST_NAME LIKE 's%'
+ORDER BY FIRST_NAME ;
+
+--2
+select FIRST_NAME , LAST_NAME from HARI_GOKUL_EMPLOYEE  where FIRST_NAME LIKE ('s%') and LAST_NAME LIKE('%n');
+
+--3
+SELECT DEPARTMENT_ID, FIRST_NAME
+FROM HARI_GOKUL_EMPLOYEE 
+WHERE DEPARTMENT_ID=90 and FIRST_NAME LIKE ('s%')
+
+--4
+SELECT DEPARTMENT_ID
+FROM HARI_GOKUL_EMPLOYEE 
+WHERE DEPARTMENT_ID LIKE '_2%' ;
+
+--5
+SELECT  DEPARTMENT_ID,FIRST_NAME,LAST_NAME FROM  HARI_GOKUL_EMPLOYEE 
+where DEPARTMENT_ID in( 10,20,50,90)
+
+--6
+SELECT * FROM HARI_GOKUL_EMPLOYEE WHERE SALARY BETWEEN 5000 and 7000;
+
+--7
+select HARI_GOKUL_EMPLOYEE.FIRST_NAME ,HARI_GOKUL_EMPLOYEE.SALARY , DEPART.DEPARTMENT_ID , DEPART.MANAGER_ID
+from HARI_GOKUL_EMPLOYEE  inner join DEPART  on HARI_GOKUL_EMPLOYEE.DEPARTMENT_ID= DEPART.DEPARTMENT_ID
+Where  DEPART.MANAGER_ID is null
+
+
+--8
+SELECT * 
+FROM HARI_GOKUL_EMPLOYEE 
+ORDER BY FIRST_NAME ASC
+    
+--9
+ SELECT FIRST_NAME,DEPARTMENT_ID,SALARY
+ FROM HARI_GOKUL_EMPLOYEE 
+ORDER BY 
+SALARY DESC , 
+DEPARTMENT_ID ASC ;
+          
+--10
+SELECT SUBSTRING(FIRST_NAME,1,3) 
+     FROM HARI_GOKUL_EMPLOYEE ;
+
+--11
+SELECT Right(LAST_NAME,2) as
+ExtractString from
+HARI_GOKUL_EMPLOYEE ;
+
+--12
+select CHARINDEX ('a' ,FIRST_NAME ) AS MatchPosition from HARI_GOKUL_EMPLOYEE 
+
+--13
+SELECT MAX(SALARY) FROM HARI_GOKUL_EMPLOYEE ;
+
+--14
+SELECT MAX(SALARY) FROM HARI_GOKUL_EMPLOYEE  WHERE SALARY < (SELECT MAX(SALARY) FROM Hari_Gokul);
+
+--15
+select avg(SALARY ) from HARI_GOKUL_EMPLOYEE 
+where DEPARTMENT_ID=90;
+
+--16
+SELECT COUNT(DEPARTMENT_ID) FROM HARI_GOKUL_EMPLOYEE  WHERE DEPARTMENT_ID=30 GROUP BY YEAR_OF_JOINING
+
+--17
+select avg(SALARY ) from HARI_GOKUL_EMPLOYEE 
+where YEAR_OF_RELIEVING BETWEEN  '2005-07-20 03:12:45' AND '2021-11-10 17:38:00'
+
+--18
+  select month (YEAR_OF_JOINING) as MONTH_OF_JOINING
+ from HARI_GOKUL_EMPLOYEE
+ group by month (YEAR_OF_JOINING) 
+ having count(ID)>5
+
+
+--19
+select LAST_NAME ,YEAR_OF_JOINING from HARI_GOKUL_EMPLOYEE 
+where year (YEAR_OF_JOINING) between 2000 and 2005
+
+--20
+select count(YEAR_OF_JOINING)
+from HARI_GOKUL_EMPLOYEE 
+where (year(YEAR_OF_JOINING))>=10
+
+--21
+SELECT ID, AVG(SALARY) FROM HARI_GOKUL_EMPLOYEE 
+GROUP BY ID
+HAVING AVG(SALARY)>10000
+
+--22
+
+
+--23
+select ID,FIRST_NAME
+from HARI_GOKUL_EMPLOYEE 
+where (year(YEAR_OF_JOINING))=2022
+
+--24
+SELECT UPPER(FIRST_NAME),LOWER(LAST_NAME)
+   FROM HARI_GOKUL_EMPLOYEE 
+
+--25
+select FIRST_NAME , len(FIRST_NAME) as 'LENGTH OF FIRST NAME'
+from HARI_GOKUL_EMPLOYEE 
+where  FIRST_NAME like '__b%'
+
+
+--27
+SELECT *
+FROM HARI_GOKUL_EMPLOYEE 
+where (month(YEAR_OF_JOINING))=5
+
+
+--28
+SELECT ID, FIRST_NAME,LAST_NAME
+FROM  HARI_GOKUL_EMPLOYEE 
+WHERE SALARY >  
+(SELECT AVG(SALARY)  
+FROM HARI_GOKUL_EMPLOYEE)
+
+--29
+
+ create table HARI_EMPLPOYEE (EMP_ID int PRIMARY KEY ,EMP_NAME varchar(20))
+ create table GOKUL_EMPLOYEE ( EMP_ID int FOREIGN KEY  REFERENCES HARI_EMPLPOYEE(EMP_ID),DEP_NAME varchar(20))
+ insert into HARI_EMPLPOYEE values (101,'GOKUL')
+ insert into HARI_EMPLPOYEE values (102,'KRISH')
+ insert into HARI_EMPLPOYEE values (103,'MUKIL')
+ select * from HARI_EMPLPOYEE
+ insert into GOKUL_EMPLOYEE values (101,'CSE')
+ insert into GOKUL_EMPLOYEE values (102,'ECE')
+ insert into GOKUL_EMPLOYEE values (103,'MECH')
+ select * from GOKUL_EMPLOYEE
+ 
+
+ --30
+ update HARI_GOKUL_EMPLOYEE set FIRST_NAME=null where ID=12
+ select*from HARI_GOKUL_EMPLOYEE
+
+ --31
+ create view GOKUL_TABLE as
+select E.ID,FIRST_NAME,E.LAST_NAME,D.DEPARTMENT_ID,D.DEPARTMENT_NAME 
+from HARI_GOKUL_EMPLOYEE as E inner join DEPART as D on E.DEPARTMENT_ID= D.DEPARTMENT_ID
+select * from GOKUL_TABLE
+
+--32
+create synonym HARI_GOKUL_TABLEE for HARI_GOKUL_EMPLOYEE 
+ select * from HARI_GOKUL_TABLEE
+
+ --33
+ ALTER procedure HARI_PROC as  
+ BEGIN
+  select*from HARI_GOKUL_EMPLOYEE
+  where YEAR_OF_JOINING between '2015-01-01 01:30:00.000 ' and '2015-05-21 01:30:00.000 '
+  END
+  exec HARI_PROC
+
+  --34
+    create procedure HARI_INSERT_VALUE as
+	BEGIN
+    insert into DEPART values (45,119,'Technical')
+    END
+	exec HARI_INSERT_VALUE
+	--35
+select replace(convert(varchar, '2006-12-30',101),'-','') + replace(convert(varchar, '00:38:54',108),':','');
+
