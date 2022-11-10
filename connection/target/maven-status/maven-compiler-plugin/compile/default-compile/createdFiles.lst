@@ -1,0 +1,3 @@
+com\htmlconnection\ConnectionApplication.class
+com\htmlconnection\ServletInitializer.class
+com\htmlconnection\ht\HtmlConnection.class
